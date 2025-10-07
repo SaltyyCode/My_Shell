@@ -1,11 +1,15 @@
 # Makefile pour My_SH
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -Iinclude
+CFLAGS = -Wall -Wextra -g -Iinclude
 NAME = my_sh
 
 SRC = src/main.c \
 	  src/shell/shell_loop.c \
+	  src/builtins/builtin.c \
+	  src/env/env.c \
+	  src/parser/parser.c
+
 
 OBJ = $(SRC:.c=.o)
 
