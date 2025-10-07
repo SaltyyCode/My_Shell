@@ -1,9 +1,24 @@
 #include "my_sh.h"
 
-int sh_loop()
+int sh_loop(char **env)
 {
-    if (isatty(STDOUT_FILENO)) {
-         printf("Welcome to shell!\n");
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    char **args;
+    int status = 0;
+    
+    while(1)
+    {
+        if (isatty(STDOUT_FILENO)){
+            write(1, "$> ", 3);
+        }
+        read = getline(&line, &len, stdin);
+        args = parse_line(line);
+
+        if (is_builtin(args[0]))
+            status = execute_builtin(args, &env);
     }
-    return 0;
+    free(line);
+    return status;
 }
