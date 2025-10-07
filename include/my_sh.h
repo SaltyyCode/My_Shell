@@ -16,9 +16,16 @@ int my_cd(char **args, char ***env);
 int my_setenv(char **args, char ***env);
 int my_unsetenv(char **args, char ***env);
 int my_env(char **args, char **env);
+char **copy_env(char **env);
+void free_env(char **env);
 int my_exit(char **args);
-int sh_loop();
 
+int sh_loop(char **env);
+
+int is_builtin(char *command);
+int execute_builtin(char **args, char ***env);
+
+char **parse_line(char *line);
 
 // Structure pour les builtins
 typedef struct {
