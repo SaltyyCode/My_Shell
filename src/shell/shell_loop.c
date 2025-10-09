@@ -1,6 +1,6 @@
 #include "my_sh.h"
 
-int sh_loop(char **env)
+int sh_loop(char ***env)
 {
     char *line = NULL;
     size_t len = 0;
@@ -10,14 +10,31 @@ int sh_loop(char **env)
     
     while(1)
     {
-        if (isatty(STDOUT_FILENO)){
-            write(1, "$> ", 3);
+        if (isatty(STDIN_FILENO)) {
+            char *dir = get_current_dir();
+            if (dir) {
+                dprintf(1, "%s%s%s $> %s", GREEN, dir, RESET, RESET);
+                free(dir);
+            } else {
+                dprintf(1, "%s$> %s", GREEN, RESET);
+            }
         }
         read = getline(&line, &len, stdin);
+
+        if (read == -1){
+            if (isatty(STDIN_FILENO))
+                write(1, "\n", 1);
+            break;
+        }
         args = parse_line(line);
 
+        if (!args || !args[0]){
+            free_args(args);
+            continue;
+        }
         if (is_builtin(args[0]))
-            status = execute_builtin(args, &env);
+            status = execute_builtin(args, env);
+        free_args(args);
     }
     free(line);
     return status;
