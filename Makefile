@@ -6,10 +6,15 @@ NAME = my_sh
 
 SRC = src/main.c \
 	  src/shell/shell_loop.c \
+	  src/shell/shell_banner.c \
 	  src/builtins/builtin.c \
 	  src/env/env.c \
-	  src/parser/parser.c
-
+	  src/env/setenv.c \
+	  src/error/error.c \
+	  src/parser/parser.c \
+	  src/exit/exit.c \
+	  src/arguments/args.c \
+	  src/utils/current_dir.c \
 
 OBJ = $(SRC:.c=.o)
 
