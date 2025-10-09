@@ -1,8 +1,9 @@
-#include "my_sh.h"
+#include "builtins/builtins.h"
+#include "env/env.h"
 
 int is_builtin(char *command)
 {
-    char *builtins[] = {"env", NULL};
+    char *builtins[] = {"env", "exit", "help", "setenv", NULL};
 
     for (int i = 0; builtins[i] != NULL; i++)
     {
@@ -20,5 +21,19 @@ int execute_builtin(char **args, char ***env)
     {
         return (my_env(args, *env));
     }
+    if (strcmp(args[0], "exit") == 0)
+    {
+        return (my_exit(args, env));
+    }
+    if (strcmp(args[0], "help") == 0)
+    {
+        print_shell_info();
+        return 0;
+    }
+     if (strcmp(args[0], "setenv") == 0)
+    {
+        return (my_setenv(args, env));
+    }
+    return 0;
 }
 
