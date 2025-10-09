@@ -1,4 +1,6 @@
 #include "my_sh.h"
+#include "builtins/builtins.h"
+#include "env/env.h"
 
 int main(int argc, char **argv, char **envp)
 {
@@ -13,8 +15,8 @@ int main(int argc, char **argv, char **envp)
     write(2, "Error: malloc failed\n", 21);
     return 84;
     }
-    
-    status = sh_loop(envp);
+    print_shell_banner_compact(env);
+    status = sh_loop(&env);
     free_env(env);
     return status;
 }
