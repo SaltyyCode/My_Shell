@@ -10,6 +10,7 @@ SRC = src/main.c \
 	  src/builtins/builtin.c \
 	  src/env/env.c \
 	  src/env/setenv.c \
+	  src/env/unsetenv.c \
 	  src/error/error.c \
 	  src/parser/parser.c \
 	  src/exit/exit.c \
