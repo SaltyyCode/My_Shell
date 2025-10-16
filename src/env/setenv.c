@@ -19,7 +19,7 @@ static int check_setenv_args(char **args)
     return 0;
 }
 
-static char *create_env_entry(const char *key, const char *value)
+char *create_env_entry(const char *key, const char *value)
 {
     char *new_entry = malloc(strlen(key) + strlen(value) + 2);
     
@@ -33,7 +33,7 @@ static char *create_env_entry(const char *key, const char *value)
     return new_entry;
 }
 
-static int update_existing_var(char **env, const char *key, char *new_entry)
+int update_existing_var(char **env, const char *key, char *new_entry)
 {
     int key_len = strlen(key);
 
@@ -69,6 +69,18 @@ static int update_existing_var(char **env, const char *key, char *new_entry)
     return 0;
 }
 
+void update_env_var(const char *name, const char *value, char ***env)
+{
+    char *new_entry = create_env_entry(name, value);
+    if (!new_entry)
+        return;
+    
+    if (update_existing_var(*env, name, new_entry))
+        return;
+    
+    add_new_var(env, new_entry);
+}
+
 int my_setenv(char **args, char ***env)
 {
     if (check_setenv_args(args) != 0)
@@ -83,3 +95,4 @@ int my_setenv(char **args, char ***env)
 
     return add_new_var(env, new_entry);
 }
+
