@@ -3,7 +3,7 @@
 
 int is_builtin(char *command)
 {
-    char *builtins[] = {"env", "exit", "help", "setenv", "unsetenv", NULL};
+    char *builtins[] = {"env", "exit", "help", "setenv", "unsetenv", "cd", NULL};
 
     for (int i = 0; builtins[i] != NULL; i++)
     {
@@ -37,6 +37,10 @@ int execute_builtin(char **args, char ***env)
      if (strcmp(args[0], "unsetenv") == 0)
     {
         return (my_unsetenv(args, env));
+    }
+      if (strcmp(args[0], "cd") == 0)
+    {
+        return (my_cd(args, env));
     }
     return 0;
 }
