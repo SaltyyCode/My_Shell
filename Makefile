@@ -11,6 +11,7 @@ SRC = src/main.c \
 	  src/env/env.c \
 	  src/env/setenv.c \
 	  src/env/unsetenv.c \
+	  src/cd/my_cd.c \
 	  src/error/error.c \
 	  src/parser/parser.c \
 	  src/exit/exit.c \
