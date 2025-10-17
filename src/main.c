@@ -12,11 +12,11 @@ int main(int argc, char **argv, char **envp)
 
     env = copy_env(envp);
     if (!env) {
-    write(2, "Error: malloc failed\n", 21);
-    return 84;
+        write(2, "Error: malloc failed\n", 21);
+        return 84;
     }
     print_shell_banner_compact(env);
-    status = sh_loop(&env);
+    status = sh_loop(env);
     free_env(env);
     return status;
 }
