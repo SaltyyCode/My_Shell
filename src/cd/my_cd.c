@@ -43,6 +43,7 @@ int my_cd(char **args, char ***env)
     
     if (chdir(path) == -1) {
         print_error("chdir: No such file or directory\n");
+        return 1;
     }
     getcwd(new_pwd, sizeof(new_pwd));
     update_env_var("OLDPWD", old_pwd, env);
