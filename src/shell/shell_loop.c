@@ -1,10 +1,10 @@
 #include "my_sh.h"
 
-int sh_loop(char ***env)
+int sh_loop(char **env)
 {
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
+    ssize_t read_len;
     char **args;
     int status = 0;
     
@@ -19,21 +19,25 @@ int sh_loop(char ***env)
                 dprintf(1, "%s$> %s", GREEN, RESET);
             }
         }
-        read = getline(&line, &len, stdin);
+        read_len = getline(&line, &len, stdin);
 
-        if (read == -1){
+        if (read_len == -1) {
             if (isatty(STDIN_FILENO))
                 write(1, "\n", 1);
             break;
         }
         args = parse_line(line);
 
-        if (!args || !args[0]){
-            free_args(args);
+        if (!args || !args[0]) {
+            if (args)
+                free_args(args);
             continue;
         }
         if (is_builtin(args[0]))
-            status = execute_builtin(args, env);
+            status = execute_builtin(args, &env);
+        else
+            status = execute_command(args, env);
+        
         free_args(args);
     }
     free(line);
