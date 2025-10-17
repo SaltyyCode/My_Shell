@@ -29,9 +29,12 @@ int my_exit(char **args, char ***env);
 void print_error(char const *str);
 char *get_current_dir(void);
 
-int sh_loop(char ***env);
+int sh_loop(char **env);
 void print_shell_banner_compact(char **env);
 void  print_shell_info(void);
+
+int execute_command(char **args, char **env);
+char *find_command(char *cmd, char**env);
 
 void free_args(char **args);
 
